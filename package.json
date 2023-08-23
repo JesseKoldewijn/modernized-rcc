@@ -7,6 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "lint:check": "prettier -c ./src/**/*.{tsx,ts,astro,css}",
     "astro": "astro"
   },
   "dependencies": {

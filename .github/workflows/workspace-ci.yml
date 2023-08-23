@@ -1,0 +1,28 @@
+name: Build and Lint Check
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-pnpm@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Astro.js application
+        run: pnpm run build
+
+      - name: Check for linting issues
+        run: pnpm run lint:check
