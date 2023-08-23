@@ -1,4 +1,4 @@
-import { Div, useMotionAnimate } from "@glitchtech-dev/react-motion";
+import { useMotionAnimate } from "@glitchtech-dev/react-motion";
 import { Component } from "react";
 
 interface ListerProps {
