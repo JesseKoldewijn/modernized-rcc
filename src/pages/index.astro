@@ -1,6 +1,6 @@
 ---
 import GlobalLayout from "../layouts/globalLayout.astro";
-import Lister from "@/components/react-rcc/lister";
+import ListItem from "@/components/react-rcc/list-item";
 
 const demoMessage = {
   title: "Hello World",
@@ -25,7 +25,7 @@ const demoMessages = Array.from({ length: 6 }, () => demoMessage);
         <h2 class="font-semibold">React Class Components</h2>
         {
           demoMessages.flatMap((item) => (
-            <Lister
+            <ListItem
               initialTS={new Date().getTime()}
               message={item}
               tikInterval={1250}
@@ -39,3 +39,4 @@ const demoMessages = Array.from({ length: 6 }, () => demoMessage);
     </div>
   </div>
 </GlobalLayout>
+ @/components/react-rcc/list-item

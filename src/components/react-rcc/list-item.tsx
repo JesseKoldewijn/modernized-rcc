@@ -1,7 +1,7 @@
 import { useMotionAnimate } from "@glitchtech-dev/react-motion";
 import { Component } from "react";
 
-interface ListerProps {
+interface ListItemProps {
   initialTS: number;
   maxTikkedMs: number;
   tikInterval: number;
@@ -13,17 +13,17 @@ interface ListerProps {
   };
 }
 
-interface ListerState {
+interface ListItemState {
   initialTS: number;
-  message: ListerProps["message"];
+  message: ListItemProps["message"];
 }
 
-export default class Lister extends Component<ListerProps> {
-  state: ListerState;
+export default class ListItem extends Component<ListItemProps> {
+  state: ListItemState;
   animatedOuterDiv: HTMLDivElement | null = null;
   animatedTikker: HTMLSpanElement | null = null;
 
-  constructor(props: ListerProps) {
+  constructor(props: ListItemProps) {
     super(props);
     this.state = {
       initialTS: props.initialTS,
