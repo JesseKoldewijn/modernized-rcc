@@ -2,6 +2,7 @@ import { useMotionAnimate } from "@glitchtech-dev/react-motion";
 import { Component } from "react";
 
 interface ListItemProps {
+  itemKey?: number;
   maxTikkedMs: number;
   tikInterval: number;
   keepTikking?: boolean;
@@ -14,6 +15,7 @@ interface ListItemProps {
 
 interface ListItemState {
   initialTS: number;
+  visible: boolean;
   message: ListItemProps["message"];
 }
 
@@ -26,6 +28,7 @@ export default class ListItem extends Component<ListItemProps> {
     super(props);
     this.state = {
       initialTS: new Date().getTime(),
+      visible: false,
       message: props.message ?? {
         title: "No title",
         body: "No body",
@@ -34,19 +37,57 @@ export default class ListItem extends Component<ListItemProps> {
     };
   }
 
+  isInViewport(elem: HTMLDivElement | HTMLSpanElement) {
+    const bounding = elem.getBoundingClientRect();
+
+    const isInViewPortBoolean =
+      bounding.top >= 0 &&
+      bounding.left >= 0 &&
+      bounding.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      bounding.right <=
+        (window.innerWidth || document.documentElement.clientWidth);
+
+    const stateClone = { ...this.state };
+
+    stateClone.visible = isInViewPortBoolean;
+
+    this.setState(stateClone);
+
+    return isInViewPortBoolean;
+  }
+
+  runAnimation(elem: HTMLDivElement | HTMLSpanElement) {
+    useMotionAnimate(
+      elem,
+      {
+        opacity: ["0", "1"],
+      },
+      {
+        easing: "ease-in-out",
+        duration: 0.25,
+        allowWebkitAcceleration: true,
+      },
+    );
+  }
+
   componentDidMount() {
     if (this.animatedOuterDiv) {
-      useMotionAnimate(
-        this.animatedOuterDiv,
-        {
-          opacity: ["0", "1"],
-        },
-        {
-          easing: "ease-in-out",
-          duration: 0.25,
-          allowWebkitAcceleration: true,
-        },
-      );
+      const viewportHandler = () => {
+        if (!this.animatedOuterDiv || this.state.visible) return;
+
+        if ((this.props.itemKey ?? 0) > 5) {
+          const isInViewportBool = this.isInViewport(this.animatedOuterDiv);
+
+          if (!this.state.visible && isInViewportBool) {
+            this.runAnimation(this.animatedOuterDiv);
+          }
+        }
+      };
+      window.addEventListener("scroll", viewportHandler);
+      window.removeEventListener("scroll", viewportHandler);
+
+      this.runAnimation(this.animatedOuterDiv);
     }
 
     const subscription = setInterval(() => {
@@ -72,23 +113,14 @@ export default class ListItem extends Component<ListItemProps> {
 
   componentDidUpdate() {
     if (this.animatedTikker) {
-      useMotionAnimate(
-        this.animatedTikker,
-        {
-          opacity: ["0", "1"],
-        },
-        {
-          easing: "ease-in-out",
-          duration: 0.25,
-          allowWebkitAcceleration: true,
-        },
-      );
+      this.runAnimation(this.animatedTikker);
     }
   }
 
   render() {
     return (
       <div
+        key={this.props.itemKey}
         className="mx-auto w-full rounded border-2 border-gray-300 px-3 py-4 flex flex-col gap-2"
         ref={(el) => {
           if (el) this.animatedOuterDiv = el;

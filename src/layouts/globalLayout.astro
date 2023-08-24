@@ -34,7 +34,7 @@ const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
     />
   </head>
   <body>
-    <Navbar pathname={pathname} client:idle />
+    <Navbar pathname={pathname} />
     <main class="inset-0 min-h-screen" data-elementID-globalRoot>
       <slot />
     </main>

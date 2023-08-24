@@ -13,7 +13,10 @@ export default defineConfig({
   site: seoConfig.baseURL,
   integrations: [
     react(),
-    prefetch(),
+    prefetch({
+      // Prefetch all pages in the /blog directory
+      include: ["/**"],
+    }),
     sitemap(),
     Compress({
       CSS: true,
@@ -27,10 +30,14 @@ export default defineConfig({
     inlineStylesheets: "auto",
   },
   vite: {
+    build: {
+      chunkSizeWarningLimit: 10000000,
+    },
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
         manifest,
+
         workbox: {
           globDirectory: "dist",
           globPatterns: [
@@ -39,6 +46,7 @@ export default defineConfig({
           // Don't fallback on document based (e.g. `/some-page`) requests
           // This removes an errant console.log message from showing up.
           navigateFallback: null,
+          maximumFileSizeToCacheInBytes: 10000000,
         },
       }),
     ],
