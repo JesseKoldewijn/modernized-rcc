@@ -4,6 +4,10 @@ import "@/styles/tailwind.css";
 import { appConfig } from "@/config/app";
 
 const { title } = Astro.props;
+
+const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
+  (entry) => entry[0] == title,
+);
 ---
 
 <html lang="en">
@@ -11,8 +15,17 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title} | {appConfig.branding.name}</title>
+    <title>
+      {title ? title + appConfig.meta.title.separator : ""}{
+        appConfig.meta.title.branding
+      }
+    </title>
+    <meta
+      name="description"
+      content={pageSpecificDesc
+        ? String(pageSpecificDesc[1])
+        : appConfig.meta.desc.default}
+    />
   </head>
   <body>
     <main class="inset-0 min-h-screen" data-elementID-globalRoot>
