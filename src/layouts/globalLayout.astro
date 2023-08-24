@@ -1,9 +1,15 @@
 ---
 import "@/styles/tailwind.css";
 
-import { appConfig } from "@/config/app";
+import { appConfig, type PageTitle } from "@/config/app";
+import Navbar from "@/components/react-rcc/navbar";
+
+interface Props {
+  title: PageTitle;
+}
 
 const { title } = Astro.props;
+const { pathname } = Astro.url;
 
 const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
   (entry) => entry[0] == title,
@@ -28,6 +34,7 @@ const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
     />
   </head>
   <body>
+    <Navbar pathname={pathname} client:idle />
     <main class="inset-0 min-h-screen" data-elementID-globalRoot>
       <slot />
     </main>
