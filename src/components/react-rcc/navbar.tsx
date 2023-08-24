@@ -25,7 +25,7 @@ export default class Navbar extends Component<NavbarProps> {
                 (this.props.pathname == link.href ? " text-white" : "")
               }
               href={link.href}
-              aria-current="page"
+              aria-current={this.props.pathname == link.href}
             >
               {link.name}
             </a>
