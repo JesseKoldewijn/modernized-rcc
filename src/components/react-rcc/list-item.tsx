@@ -71,23 +71,29 @@ export default class ListItem extends Component<ListItemProps> {
     );
   }
 
+  viewportHandler(el: IntersectionObserverEntry[]) {
+    if (!el[0].target || this.state.visible) return;
+
+    const isInViewportBool = this.isInViewport(el[0].target as HTMLDivElement);
+
+    if (!this.state.visible && isInViewportBool) {
+      this.runAnimation(el[0].target as HTMLDivElement);
+    }
+  }
+
   componentDidMount() {
     if (this.animatedOuterDiv) {
-      const viewportHandler = () => {
-        if (!this.animatedOuterDiv || this.state.visible) return;
+      if (this.state.visible) return;
+      let observer = new IntersectionObserver(
+        (el) => this.viewportHandler(el),
+        {
+          root: null,
+          rootMargin: "0px",
+          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        },
+      );
 
-        if ((this.props.itemKey ?? 0) > 5) {
-          const isInViewportBool = this.isInViewport(this.animatedOuterDiv);
-
-          if (!this.state.visible && isInViewportBool) {
-            this.runAnimation(this.animatedOuterDiv);
-          }
-        }
-      };
-      window.addEventListener("scroll", viewportHandler);
-      window.removeEventListener("scroll", viewportHandler);
-
-      this.runAnimation(this.animatedOuterDiv);
+      observer.observe(this.animatedOuterDiv);
     }
 
     const subscription = setInterval(() => {
@@ -120,7 +126,7 @@ export default class ListItem extends Component<ListItemProps> {
   render() {
     return (
       <div
-        key={this.props.itemKey}
+        key={this.props.itemKey + "_listItem"}
         className="mx-auto w-full rounded border-2 border-gray-300 px-3 py-4 flex flex-col gap-2"
         ref={(el) => {
           if (el) this.animatedOuterDiv = el;
