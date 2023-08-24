@@ -7,6 +7,7 @@ export const appConfig = {
         href: "/",
       },
       { name: "React RCC", href: "/react-rcc" },
+      { name: "jQuery", href: "/jquery" },
     ],
   },
   meta: {
@@ -16,6 +17,7 @@ export const appConfig = {
       separator: " | ",
       specific: {
         "react-rcc": "React.js RCC",
+        "jquery-actions": "jQuery Actions",
       },
     },
     desc: {
