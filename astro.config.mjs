@@ -1,6 +1,7 @@
 import prefetch from "@astrojs/prefetch";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel/edge";
 import Compress from "astro-compress";
 import { VitePWA } from "vite-plugin-pwa";
 
@@ -10,6 +11,8 @@ import { manifest, seoConfig } from "./seo-config";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: vercel(),
   site: seoConfig.baseURL,
   integrations: [
     react(),
@@ -37,7 +40,6 @@ export default defineConfig({
       VitePWA({
         registerType: "autoUpdate",
         manifest,
-
         workbox: {
           globDirectory: "dist",
           globPatterns: [

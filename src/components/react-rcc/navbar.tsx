@@ -1,5 +1,5 @@
-import { ReactOriginal } from "devicons-react";
 import { Component } from "react";
+import { BiLogoReact } from "react-icons/bi";
 
 import { appConfig } from "@/config/app";
 
@@ -14,10 +14,10 @@ export default class Navbar extends Component<NavbarProps> {
 
   render() {
     return (
-      <nav className="fixed flex bg-[rgba(0,0,0,0.5)] border-b-purple-600 border-b-2 top-1 right-6 left-6 rounded-md h-auto px-4 py-2">
+      <nav className="fixed flex bg-[rgba(0,0,0,0.5)] border-b-purple-600 border-b-2 top-0 right-6 left-6 rounded-md h-auto px-4 py-2">
         <a className="flex gap-2" href="/">
           <span className="sr-only">logo {appConfig.nav.title}</span>
-          <ReactOriginal size={30} />
+          <BiLogoReact size={40} className="my-auto fill-cyan-400" />
           <span className="my-auto hidden md:block">{appConfig.nav.title}</span>
         </a>
         <div className="ml-auto mr-2 flex gap-6">
