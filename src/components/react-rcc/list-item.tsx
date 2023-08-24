@@ -2,7 +2,6 @@ import { useMotionAnimate } from "@glitchtech-dev/react-motion";
 import { Component } from "react";
 
 interface ListItemProps {
-  initialTS: number;
   maxTikkedMs: number;
   tikInterval: number;
   keepTikking?: boolean;
@@ -26,7 +25,7 @@ export default class ListItem extends Component<ListItemProps> {
   constructor(props: ListItemProps) {
     super(props);
     this.state = {
-      initialTS: props.initialTS,
+      initialTS: new Date().getTime(),
       message: props.message ?? {
         title: "No title",
         body: "No body",

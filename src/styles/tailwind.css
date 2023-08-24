@@ -4,9 +4,6 @@
 
 @layer base {
   :root {
-    @apply scroll-smooth bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 bg-contain bg-center text-gray-300;
-  }
-  html {
-    @apply overflow-auto antialiased;
+    @apply overflow-auto scroll-smooth bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 bg-contain bg-center text-gray-300 antialiased;
   }
 }
