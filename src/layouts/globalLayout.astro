@@ -1,6 +1,9 @@
 ---
 import "@/styles/tailwind.css";
-const { title, subtitle } = Astro.props;
+
+import { appConfig } from "@/config/app";
+
+const { title } = Astro.props;
 ---
 
 <html lang="en">
@@ -9,7 +12,7 @@ const { title, subtitle } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | {subtitle}</title>
+    <title>{title} | {appConfig.branding.name}</title>
   </head>
   <body>
     <main class="inset-0 min-h-screen" data-elementID-globalRoot>
