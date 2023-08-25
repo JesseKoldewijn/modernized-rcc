@@ -14,6 +14,7 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
   site: seoConfig.baseURL,
+  compressHTML: true,
   integrations: [
     react(),
     prefetch({
