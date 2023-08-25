@@ -31,19 +31,19 @@ export const manifest: Partial<ManifestOptions> = {
   display: "standalone",
   icons: [
     {
-      src: "/favicon.ico",
+      src: "/favicons/favicon-192x192.png",
       sizes: "192x192",
-      type: "image/ico",
+      type: "image/png",
     },
     {
-      src: "/favicon.ico",
+      src: "/favicons/favicon-512x512.png",
       sizes: "512x512",
-      type: "image/ico",
+      type: "image/png",
     },
     {
-      src: "/favicon.ico",
+      src: "/favicons/favicon-512x512.png",
       sizes: "512x512",
-      type: "image/ico",
+      type: "image/png",
       purpose: "any maskable",
     },
   ],
