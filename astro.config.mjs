@@ -1,3 +1,4 @@
+import node from "@astrojs/node";
 import prefetch from "@astrojs/prefetch";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -9,10 +10,16 @@ import { defineConfig } from "astro/config";
 
 import { manifest, seoConfig } from "./seo-config";
 
+const isDocker = process.env.CONTAINER === "true";
+
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  adapter: vercel(),
+  adapter: !isDocker
+    ? vercel()
+    : node({
+        mode: "standalone",
+      }),
   site: seoConfig.baseURL,
   compressHTML: true,
   integrations: [
