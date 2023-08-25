@@ -8,9 +8,10 @@ import { VitePWA } from "vite-plugin-pwa";
 
 import { defineConfig } from "astro/config";
 
-import { manifest, seoConfig } from "./seo-config";
+import { manifest, seoConfig } from "./src/utils/seo-config";
 
 const isDocker = process.env.CONTAINER === "true";
+const isDev = process.env.NODE_ENV === "development";
 
 // https://astro.build/config
 export default defineConfig({
@@ -47,16 +48,95 @@ export default defineConfig({
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
+        disable: isDev,
         manifest,
         workbox: {
-          globDirectory: "dist",
+          globDirectory: isDocker ? "./dist/client" : "./.vercel/output/static",
           globPatterns: [
             "**/*.{js,css,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}",
           ],
           // Don't fallback on document based (e.g. `/some-page`) requests
           // This removes an errant console.log message from showing up.
           navigateFallback: null,
-          maximumFileSizeToCacheInBytes: 10000000,
+          inlineWorkboxRuntime: true,
+          cleanupOutdatedCaches: true,
+          runtimeCaching: [
+            {
+              urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+              handler: "CacheFirst",
+              options: {
+                cacheName: "images",
+                expiration: {
+                  maxEntries: 20,
+
+                  // 30 days
+                  maxAgeSeconds: 30 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+
+                  // Only cache 10 images.
+                  maxEntries: 10,
+
+                  // Cache for a maximum of a week.
+                  maxAgeSeconds: 7 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+                },
+              },
+            },
+            {
+              urlPattern: /\.(?:js|css)$/,
+              handler: "StaleWhileRevalidate",
+              options: {
+                cacheName: "static-resources",
+                expiration: {
+                  maxEntries: 20,
+
+                  // 30 days
+                  maxAgeSeconds: 30 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+
+                  // Only cache 10 images.
+                  maxEntries: 10,
+
+                  // Cache for a maximum of a week.
+                  maxAgeSeconds: 7 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+                },
+              },
+            },
+            {
+              urlPattern: /\.(?:woff|woff2|ttf|eot|ico)$/,
+              handler: "StaleWhileRevalidate",
+              options: {
+                cacheName: "fonts",
+                expiration: {
+                  maxEntries: 20,
+
+                  // 30 days
+                  maxAgeSeconds: 30 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+
+                  // Only cache 10 images.
+                  maxEntries: 10,
+
+                  // Cache for a maximum of a week.
+                  maxAgeSeconds: 7 * 24 * 60 * 60,
+
+                  // Automatically cleanup if quota is exceeded.
+                  purgeOnQuotaError: true,
+                },
+              },
+            },
+          ],
         },
       }),
     ],

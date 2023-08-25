@@ -1,7 +1,11 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "verbatimModuleSyntax": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
@@ -13,6 +17,6 @@
         "name": "@astrojs/ts-plugin"
       }
     ],
-    "types": ["@astrojs/types", "react-icons", "react"]
+    "types": ["astro/client", "react-icons", "react"]
   }
 }

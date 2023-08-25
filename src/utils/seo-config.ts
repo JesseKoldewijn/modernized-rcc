@@ -1,7 +1,8 @@
 // Type imports
+import type { TwitterCardType } from "astro-seo";
 import type { ManifestOptions } from "vite-plugin-pwa";
 
-import { appConfig } from "./src/config/app";
+import { appConfig } from "../config/app";
 
 /**
  * Defines the default SEO configuration for the website.
@@ -13,7 +14,7 @@ export const seoConfig = {
   image: appConfig.meta.openGraph.image,
   siteName: appConfig.meta.title.branding, // Change this to your website's name,
   twitter: {
-    card: "summary_large_image",
+    card: "summary_large_image" as TwitterCardType,
   },
 };
 

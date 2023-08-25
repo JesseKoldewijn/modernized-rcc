@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "build:nodejs": "CONTAINER=true PORT=3000 HOST=0.0.0.0 astro build",
+    "preview:nodejs": "CONTAINER=true PORT=3000 HOST=0.0.0.0 astro preview",
     "lint:check": "prettier -c ./src/**/*.{tsx,ts,astro,css}",
     "lint:fix": "prettier --write ./src/**/*.{tsx,ts,astro,css}",
     "astro": "astro"
@@ -20,6 +21,7 @@
     "@glitchtech-dev/react-motion": "^1.5.1",
     "@heroicons/react": "^2.0.18",
     "astro": "^2.10.13",
+    "astro-seo": "^0.7.6",
     "jquery": "^3.7.0",
     "motion": "^10.16.2",
     "react": "^18.2.0",

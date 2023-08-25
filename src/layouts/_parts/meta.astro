@@ -1,5 +1,5 @@
 ---
-
+const isDev = process.env.NODE_ENV === "development";
 ---
 
 <>
@@ -80,12 +80,8 @@
     name="msapplication-TileImage"
     content="/favicons/favicon-144x144.png"
   />
-  <meta name="msapplication-config" content="/browserconfig.xml" />
   <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
   <meta name="theme-color" content="#30E130" />
 
-  <!-- Service worker registration. -->
-
-  <script is:inline src="/registerSW.js"></script>
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="msapplication-config" content="/browserconfig.xml" />
 </>
