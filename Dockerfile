@@ -11,7 +11,6 @@ COPY .npmrc ./
 # Copying the other config files
 COPY ./tsconfig.json ./
 COPY ./prettier.config.cjs ./
-COPY ./seo-config.ts ./
 
 # Installing pnpm
 RUN npm install -g pnpm
