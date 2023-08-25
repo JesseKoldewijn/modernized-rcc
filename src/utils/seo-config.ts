@@ -25,6 +25,7 @@ export const manifest: Partial<ManifestOptions> = {
   name: appConfig.meta.title.branding,
   short_name: appConfig.meta.title.branding,
   description: appConfig.meta.desc.default,
+  start_url: "/",
   theme_color: "#30E130",
   background_color: "#ffffff",
   display: "standalone",
