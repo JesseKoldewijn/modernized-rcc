@@ -1,0 +1,31 @@
+---
+import SEO from "astro-seo";
+---
+
+<>
+  <SEO
+    title={title}
+    description={seoConfig.description || description}
+    noindex={disableIndexing}
+    nofollow={disableIndexing}
+    openGraph={{
+      basic: {
+        title: ogTitle || title,
+        type: "website",
+        image: seoConfig.image.url || image.url,
+      },
+      image: {
+        width: seoConfig.image.width,
+        height: seoConfig.image.height,
+        alt: seoConfig.image.alt || image.alt,
+      },
+      optional: {
+        siteName: seoConfig.siteName,
+        description: seoConfig.description || description,
+      },
+    }}
+    twitter={{
+      card: seoConfig.twitter.card,
+    }}
+  />
+</>

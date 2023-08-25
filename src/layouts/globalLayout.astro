@@ -4,12 +4,39 @@ import "@/styles/tailwind.css";
 import { appConfig, type PageTitle } from "@/config/app";
 import Navbar from "@/components/react-rcc/navbar";
 
-interface Props {
-  title?: PageTitle;
+import Seo from "./_parts/seo.astro";
+import Pwa from "./_parts/pwa.astro";
+
+// Props
+export interface Props {
+  /** Title of the page. */
+  title: PageTitle;
+
+  /** Specific OpenGraph page title. */
+  ogTitle?: string;
+
+  /** Description of the page. */
+  description?: string;
+
+  /** Image thumbnail for the page. */
+  image?: {
+    url: string;
+    alt: string;
+  };
+
+  /** Whether or not to disable indexing */
+  disableIndexing?: boolean;
 }
 
-const { title } = Astro.props;
 const { pathname } = Astro.url;
+
+const {
+  title,
+  ogTitle,
+  description,
+  image,
+  disableIndexing = false,
+} = Astro.props as Props;
 
 const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
   (entry) => entry[0] == title,
@@ -18,20 +45,22 @@ const pageSpecificDesc = Object.entries(appConfig.meta.desc.specific).find(
 
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>
-      {title ? title + appConfig.meta.title.separator : ""}{
+    <!-- SEO. -->
+    <Seo
+      title={`${title ? title + appConfig.meta.title.separator : ""} ${
         appConfig.meta.title.branding
-      }
-    </title>
-    <meta
-      name="description"
-      content={pageSpecificDesc
+      }`}
+      description={pageSpecificDesc
         ? String(pageSpecificDesc[1])
         : appConfig.meta.desc.default}
     />
+
+    <!-- Global meta tags. -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Pwa tags. -->
+    <Pwa />
   </head>
   <body>
     <Navbar pathname={pathname} />
