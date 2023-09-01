@@ -2,7 +2,7 @@ import node from "@astrojs/node";
 import prefetch from "@astrojs/prefetch";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import vercel from "@astrojs/vercel/edge";
+import vercel from "@astrojs/vercel/serverless";
 import Compress from "astro-compress";
 import { VitePWA } from "vite-plugin-pwa";
 
@@ -17,7 +17,28 @@ const isDev = process.env.NODE_ENV === "development";
 export default defineConfig({
   output: "server",
   adapter: !isDocker
-    ? vercel()
+    ? vercel({
+        edgeMiddleware: {
+          priority: "high",
+          handlers: [
+            {
+              route: "/(.*)",
+              handler: "cache",
+              options: {
+                cacheKey: "astro-cache",
+                edge: {
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                  staleWhileRevalidateSeconds: 60 * 60 * 24 * 365,
+                },
+                browser: {
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                  serviceWorkerSeconds: 60 * 60 * 24 * 365,
+                },
+              },
+            },
+          ],
+        },
+      })
     : node({
         mode: "standalone",
       }),

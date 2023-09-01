@@ -18,6 +18,7 @@ export const appConfig = {
       specific: {
         "react-rcc": "React.js RCC",
         "jquery-actions": "jQuery Actions",
+        "404": "Page Not Found",
       },
     },
     desc: {

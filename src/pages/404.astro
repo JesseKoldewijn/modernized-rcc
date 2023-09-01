@@ -1,0 +1,21 @@
+---
+import Button from "@/components/react-rcc/Button";
+import GlobalLayout from "../layouts/globalLayout.astro";
+---
+
+<GlobalLayout title="404">
+  <div
+    class="flex h-full min-h-screen flex-col items-center justify-center gap-4 overflow-y-auto px-4 py-8"
+  >
+    <h1 class="text-2xl font-bold lg:text-4xl">Modernized RCC</h1>
+    <div class="mx-auto flex w-full flex-col items-start justify-center gap-4">
+      <section
+        class="mx-auto flex w-full max-w-md flex-col gap-3 text-center"
+        data-elementID-Home-Parent
+      >
+        <h2 class="font-semibold">React Class Components</h2>
+        <Button navBack={true} client:load>Go Back</Button>
+      </section>
+    </div>
+  </div>
+</GlobalLayout>
